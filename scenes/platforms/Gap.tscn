@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="ConvexPolygonShape" id=1]
+points = PoolVector3Array( 2, 0, 0, -2, 0, 0, 2, 0, -8, -2, 0, -8, 2, -1, 0, -2, -1, 0, 2, -1, -8, -2, -1, -8 )
+
+[node name="Gap" type="StaticBody"]
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+disabled = true
+
+[node name="Connectors" type="Spatial" parent="."]
+
+[node name="Back" type="Spatial" parent="Connectors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8 )
