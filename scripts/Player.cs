@@ -7,6 +7,7 @@ public class Player : KinematicBody
 	float gravity = 1.3f;
 	float jump_power = 35f;
 	float max_terminal_velocity = 60f;
+	float egg_power = 10f;
 	
 	private float y_vel;
 	private Vector3 velocity;
@@ -83,7 +84,7 @@ public class Player : KinematicBody
 		RigidBody egg = eggScene.Instance<RigidBody>();
 		GetTree().Root.AddChild(egg);
 		egg.GlobalTransform = eggSpawnPoint.GlobalTransform;
-		egg.ApplyCentralImpulse(eggSpawnPoint.GlobalTransform.basis.y * -jump_power);
+		egg.ApplyCentralImpulse(eggSpawnPoint.GlobalTransform.basis.y * egg_power);
 	}
 	
 	

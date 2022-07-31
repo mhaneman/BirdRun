@@ -25,6 +25,7 @@ script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="DeathFloor"]
 shape = SubResource( 1 )
+disabled = true
 
 [node name="SwipeDetector" parent="." instance=ExtResource( 4 )]
 
