@@ -14,10 +14,8 @@ public class ChunkSpace : Spatial
 	public override void _Ready()
 	{
 		gc = GetNode<GameControl>("/root/GameControl");
-		gc.Connect("PlayerInput", this, "on_PlayerInput");
 		
 		gb = GetNode<GameBus>("/root/GameBus");
-		gb.Connect("PlayerDied", this, "OnPlayerDied");
 		
 		this.speed = gc.speed;
 		Direction = new Vector2(0f, speed);
@@ -30,11 +28,6 @@ public class ChunkSpace : Spatial
 			
 		if (direction == "right")
 			Theta += Inc;
-	}
-	
-	private void OnPlayerDied()
-	{
-		speed = 0f;
 	}
 	
 	public override void _PhysicsProcess(float delta)
@@ -62,6 +55,4 @@ public class ChunkSpace : Spatial
 		t.origin.x += speed * delta * Mathf.Sin(Theta);
 		this.Transform = t;
 	}
-	
-	
 }

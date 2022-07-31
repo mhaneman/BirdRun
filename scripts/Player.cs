@@ -25,11 +25,8 @@ public class Player : KinematicBody
 	public override void _Ready()
 	{
 		gc = GetNode<GameControl>("/root/GameControl");
-		gc.Connect("PlayerInput", this, "on_PlayerInput");
-		gc.Connect("SummonEgg", this, "on_SummonEgg");
 		
 		gb = GetNode<GameBus>("/root/GameBus");
-		gb.Connect("PlayerDied", this, "OnPlayerDied");
 		
 		Death = GetNode<AudioStreamPlayer>("Death");
 		Jump = GetNode<AudioStreamPlayer>("Jump");
@@ -74,7 +71,7 @@ public class Player : KinematicBody
 			y_vel = -jump_power;	
 	}
 	
-	private void OnPlayerDied()
+	private void on_PlayerDied()
 	{
 		// play death animation
 	}
