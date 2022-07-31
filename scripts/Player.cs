@@ -35,7 +35,7 @@ public class Player : KinematicBody
 		Jump = GetNode<AudioStreamPlayer>("Jump");
 		Switch = GetNode<AudioStreamPlayer>("Switch");
 		
-		eggScene = ResourceLoader.Load<PackedScene>("res://scenes/Egg.tscn");
+		eggScene = ResourceLoader.Load<PackedScene>("res://scenes/Player/Egg.tscn");
 		eggSpawnPoint = GetNode<Spatial>("EggSpawnPoint");
 	}
 	
