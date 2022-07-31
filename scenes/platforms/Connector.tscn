@@ -51,10 +51,12 @@ script = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="CanRotateZone"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0 )
+visible = false
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="CanRotateZone"]
+visible = false
 shape = SubResource( 3 )
 
 [connection signal="body_entered" from="CanRotateZone" to="CanRotateZone" method="_on_CanRotateZone_body_entered"]

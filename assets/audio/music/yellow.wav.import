@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/yellow.wav-1f3c5cfb1c897c05133b0a0965d50745.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/yellow.wav"
+dest_files=[ "res://.import/yellow.wav-1f3c5cfb1c897c05133b0a0965d50745.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

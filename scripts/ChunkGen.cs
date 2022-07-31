@@ -17,8 +17,9 @@ public class ChunkGen : Spatial
 		{
 			if (i < 1)
 			{
-				chunk.AddNext("Flat", 20);
-				chunk.AddNext("Connector");
+				chunk.AddNext("Flat", 15);
+				chunk.AddNext("Upright");
+				chunk.AddNext("Flat", 3);
 				chunk.AddNext("Gap");
 				chunk.AddNext("Flat", 3);
 				chunk.AddNext("Connector");
@@ -53,7 +54,6 @@ public class ChunkGen : Spatial
 				chunk.AddNext("Flat", "right");
 				chunk.AddNext("Connector");
 				chunk.AddNext("Upright", "right");
-				chunk.AddNext("Upright");
 				chunk.AddNext("Connector");
 				chunk.AddNext("Flat");
 				chunk.AddNext("Gap");

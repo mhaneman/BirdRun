@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/Player.cs" type="Script" id=1]
+[ext_resource path="res://assets/audio/soundfx/gumgum/gumgum_switch.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/audio/soundfx/gumgum/gumgum_jump.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/audio/soundfx/gumgum/gumgum_death.wav" type="AudioStream" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -21,3 +24,15 @@ shape = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = null
+
+[node name="EggSpawnPoint" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1 )
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="Switch" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )

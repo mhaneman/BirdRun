@@ -10,31 +10,31 @@ public class ChunkSpace : Spatial
 	private float Theta = 0f;
 	
 	private GameControl gc;
+	private GameBus gb;
 	public override void _Ready()
 	{
 		gc = GetNode<GameControl>("/root/GameControl");
+		gc.Connect("PlayerInput", this, "on_PlayerInput");
+		
+		gb = GetNode<GameBus>("/root/GameBus");
+		gb.Connect("PlayerDied", this, "OnPlayerDied");
+		
 		this.speed = gc.speed;
 		Direction = new Vector2(0f, speed);
 	}
-	public override void _Process(float delta)
-	{
-		if (gc.InRotationZone || gc.IsOnFloor)
-		{
-			if (Input.IsActionJustPressed("left"))
-				Theta -= Inc;
-
-			if (Input.IsActionJustPressed("right"))
-				Theta += Inc;
-		}
-	}
 	
-	private void OnSwiped(string direction)
+	private void on_PlayerInput(string direction)
 	{
 		if (direction == "left")
 			Theta -= Inc;
 			
 		if (direction == "right")
 			Theta += Inc;
+	}
+	
+	private void OnPlayerDied()
+	{
+		speed = 0f;
 	}
 	
 	public override void _PhysicsProcess(float delta)
@@ -62,4 +62,6 @@ public class ChunkSpace : Spatial
 		t.origin.x += speed * delta * Mathf.Sin(Theta);
 		this.Transform = t;
 	}
+	
+	
 }

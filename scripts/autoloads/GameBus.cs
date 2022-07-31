@@ -3,5 +3,9 @@ using System;
 
 public class GameBus : Node
 {
-	public bool IsDead = false;
+	[Signal]public delegate void PlayerDied();
+	
+	public int eggs = 100;
+	public int fruits = 0;
+	
 }

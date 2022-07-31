@@ -11,8 +11,8 @@ public class DeathFloor : Area
 	
 	private void _on_DeathFloor_body_entered(object body)
 	{
-		gb.IsDead = true;
-		GD.Print("dead");
+		gb.EmitSignal("PlayerDied");
+		GD.Print("died");
 	}
 	
 }
