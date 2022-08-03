@@ -124,10 +124,6 @@ rotate_right={
 
 pointing/emulate_touch_from_mouse=true
 
-[mono]
-
-debugger_agent/wait_for_debugger=true
-
 [physics]
 
 common/enable_pause_aware_picking=true
