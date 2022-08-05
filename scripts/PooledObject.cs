@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class PooledObject<T> where T : Spatial
 {
+	private Transform discardLoc = new Transform();
 	private LinkedList<T> working = new LinkedList<T>();
 	private Stack<T> retired = new Stack<T>();
 	
@@ -20,14 +21,14 @@ public class PooledObject<T> where T : Spatial
 	
 	public PooledObject(Spatial Other, string ScenePath, int InitCount=1) 
 	{
+		this.discardLoc.origin = new Vector3(0, -20, 0);
 		this.Other = Other;
 		this.ScenePath = ScenePath;
 		
 		for(int i=0; i<InitCount; i++)
 		{
 			T t = Instance();
-			
-			// disable collision
+			t.GlobalTransform = discardLoc;
 			t.Visible = false;
 			retired.Push(t);	
 		}
@@ -48,8 +49,6 @@ public class PooledObject<T> where T : Spatial
 			t = Instance();
 		else
 			t = retired.Pop();
-			
-		// enable collision
 		t.Visible = true;
 		return t;
 	}
@@ -58,16 +57,11 @@ public class PooledObject<T> where T : Spatial
 		T t = MakeActive();
 		t.GlobalTransform = transform;
 		working.AddLast(t);
+
+		GD.Print("working: ", working.Count, " retired: ", 
+			retired.Count, " ", ScenePath);
+			
 		return t;
-	}
-	
-	public T Summon(Transform transform, Vector3 scale)
-	{
-		T t = MakeActive();
-		t.GlobalTransform = transform;
-		working.AddLast(t);
-		return t;
-		
 	}
 	
 	public T Summon(Transform transform, float rotation)
@@ -76,18 +70,27 @@ public class PooledObject<T> where T : Spatial
 		t.GlobalTransform = transform;
 		t.RotateY(rotation);
 		working.AddLast(t);
+
+		GD.Print("working: ", working.Count, " retired: ", 
+			retired.Count, " ", ScenePath);
+
 		return t;
 		
 	}
-	
-	public T Summon(Transform transform, Vector3 Scale, float rotation)
+
+	public T PeekFromRetired(Transform transform)
 	{
-		T t = MakeActive();
+		T t = retired.Peek();
+		t.GlobalTransform = transform;
+		return t;
+	}
+
+	public T PeekFromRetired(Transform transform, float rotation)
+	{
+		T t = retired.Peek();
 		t.GlobalTransform = transform;
 		t.RotateY(rotation);
-		working.AddLast(t);
 		return t;
-		
 	}
 	
 	public void Dismiss() 
@@ -98,12 +101,9 @@ public class PooledObject<T> where T : Spatial
 		T t = working.First.Value;
 		working.RemoveFirst();
 		
-		// disable collision
+		t.GlobalTransform = discardLoc;
 		t.Visible = false;
 		retired.Push(t);
-		
-		/* GD.Print("working: ", working.Count, " retired: ", 
-			retired.Count, " ", ScenePath); */
 	}
 	
 	public void DismissAll()
