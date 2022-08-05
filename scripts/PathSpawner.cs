@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class PathSpawner<T> : Node where T : Spatial
 {
 	public PooledObject<T> Connector;
+	public PooledObject<T> Portal;
 	public List<PooledObject<T>> PlatformTypes = new List<PooledObject<T>>();
 	public T LastPlatform = null;
 	
@@ -13,6 +14,7 @@ public class PathSpawner<T> : Node where T : Spatial
 	public PathSpawner(Spatial Other)
 	{
 		this.Other = Other;
+		Portal = new PooledObject<T>(Other, "res://scenes/platforms/Portal.tscn", 5);
 		Connector = new PooledObject<T>(Other, "res://scenes/platforms/Connector.tscn", 100);
 		this.AddPlatformType("res://scenes/platforms/Flat.tscn", 100);
 		this.AddPlatformType("res://scenes/platforms/Stair.tscn", 100);
@@ -27,17 +29,35 @@ public class PathSpawner<T> : Node where T : Spatial
 
 	public void Summon(int platformType, float rotation)
 	{
+		Transform spawnLoc = getNextEndPoint(rotation);
+		LastPlatform = PlatformTypes[platformType].Summon(spawnLoc, rotation);
+	}
+
+	public void Summon(int platformType, float rotation, Vector3 scale)
+	{
+		Transform spawnLoc = getNextEndPoint(rotation);
+		LastPlatform = PlatformTypes[platformType].Summon(spawnLoc, rotation, scale);
+	}
+
+	private Transform getNextEndPoint(float rotation)
+	{
 		Transform spawnLoc = getCurrentEndNode();
 		Transform c;
 		if (rotation == 0f)
 			c = spawnLoc;
-		if (rotation <= -Mathf.Pi/2)
+		else if (rotation <= -Mathf.Pi/2)
 			c = Connector.Summon(spawnLoc).GetNode<Spatial>("Connectors/Left").GlobalTransform;
 		else if (rotation >= Mathf.Pi/2)
 			c = Connector.Summon(spawnLoc).GetNode<Spatial>("Connectors/Right").GlobalTransform;
 		else 
 			c = Connector.Summon(spawnLoc).GetNode<Spatial>("Connectors/Back").GlobalTransform;
-		LastPlatform = PlatformTypes[platformType].Summon(c, rotation);
+		return c;
+	}
+
+	public void SummonPortal()
+	{
+		Transform spawnLoc = getCurrentEndNode();
+		Portal.Summon(spawnLoc);
 	}
 
 	private Transform getCurrentEndNode()

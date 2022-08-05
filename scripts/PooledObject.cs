@@ -75,7 +75,20 @@ public class PooledObject<T> where T : Spatial
 			retired.Count, " ", ScenePath);
 
 		return t;
-		
+	}
+
+	public T Summon(Transform transform, float rotation, Vector3 scale)
+	{
+		T t = MakeActive();
+		t.GlobalTransform = transform;
+		t.RotateY(rotation);
+		t.Scale = scale;
+		working.AddLast(t);
+
+		GD.Print("working: ", working.Count, " retired: ", 
+			retired.Count, " ", ScenePath);
+
+		return t;
 	}
 
 	public T PeekFromRetired(Transform transform)

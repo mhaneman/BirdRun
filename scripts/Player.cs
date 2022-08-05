@@ -25,7 +25,6 @@ public class Player : KinematicBody
 	public override void _Ready()
 	{
 		gc = GetNode<GameControl>("/root/GameControl");
-		
 		gb = GetNode<GameBus>("/root/GameBus");
 		
 		Death = GetNode<AudioStreamPlayer>("Death");
@@ -44,7 +43,7 @@ public class Player : KinematicBody
 	private void Lerp()
 	{
 		Vector3 rot = this.Rotation;
-		rot.y = Mathf.LerpAngle(rot.y, theta, gc.speed * gc.lerp_weight);
+		rot.y = Mathf.LerpAngle(rot.y, theta, gc.speed * (1f / gc.lerp_weight));
 		this.Rotation = rot;
 	}
 	

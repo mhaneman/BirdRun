@@ -16,7 +16,7 @@ public class Game : Spatial
 	
 	private void on_Swiped(string direction)
 	{
-		if (direction == "down" || gc.IsOnFloor)
+		if (direction != "jump" || gc.IsOnFloor)
 		{
 			EmitSignal("PlayerInput", direction);
 			return;
