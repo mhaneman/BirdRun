@@ -8,16 +8,18 @@ public class PathSpawner<T> : Node where T : Spatial
 	public PooledObject<T> Connector;
 	public PooledObject<T> Portal;
 	public List<PooledObject<T>> PlatformTypes = new List<PooledObject<T>>();
-	public T LastPlatform = null;
+	public LinkedList<T> ActivePlatforms = new LinkedList<T>();
 	
 	private Spatial Other;
 	public PathSpawner(Spatial Other)
 	{
 		this.Other = Other;
 		Portal = new PooledObject<T>(Other, "res://scenes/platforms/Portal.tscn", 5);
-		Connector = new PooledObject<T>(Other, "res://scenes/platforms/Connector.tscn", 100);
-		this.AddPlatformType("res://scenes/platforms/Flat.tscn", 100);
-		this.AddPlatformType("res://scenes/platforms/Stair.tscn", 100);
+		Connector = new PooledObject<T>(Other, "res://scenes/platforms/Connector.tscn", 50);
+		this.AddPlatformType("res://scenes/platforms/Flat.tscn", 50);
+		this.AddPlatformType("res://scenes/platforms/Stair.tscn", 50);
+		this.AddPlatformType("res://scenes/platforms/Down.tscn", 50);
+		
 		//this.AddPlatformType("res://scenes/platforms/Gap.tscn", 10);
 		//this.AddPlatformType("res://scenes/platforms/Upright.tscn", 10);
 	}
@@ -26,17 +28,32 @@ public class PathSpawner<T> : Node where T : Spatial
 	{
 		PlatformTypes.Add(new PooledObject<T>(Other, ScenePath, InitCount));
 	}
+	
+	public void Reset()
+	{
+		ActivePlatforms.Clear();
+		Portal.Clear();
+		Connector.Clear();
+		foreach (var t in PlatformTypes)
+			t.Clear();
+	}
 
 	public void Summon(int platformType, float rotation)
 	{
 		Transform spawnLoc = getNextEndPoint(rotation);
-		LastPlatform = PlatformTypes[platformType].Summon(spawnLoc, rotation);
+		ActivePlatforms.AddFirst(PlatformTypes[platformType].Summon(spawnLoc, rotation));
 	}
 
 	public void Summon(int platformType, float rotation, Vector3 scale)
 	{
 		Transform spawnLoc = getNextEndPoint(rotation);
-		LastPlatform = PlatformTypes[platformType].Summon(spawnLoc, rotation, scale);
+		ActivePlatforms.AddFirst(PlatformTypes[platformType].Summon(spawnLoc, rotation, scale));
+	}
+	
+	public void SummonPortal()
+	{
+		Transform spawnLoc = getCurrentEndNode();
+		Portal.Summon(spawnLoc);
 	}
 
 	private Transform getNextEndPoint(float rotation)
@@ -54,16 +71,10 @@ public class PathSpawner<T> : Node where T : Spatial
 		return c;
 	}
 
-	public void SummonPortal()
-	{
-		Transform spawnLoc = getCurrentEndNode();
-		Portal.Summon(spawnLoc);
-	}
-
 	private Transform getCurrentEndNode()
 	{
-		if (LastPlatform != null) 
-			return LastPlatform.GetNode<Spatial>("Connectors/Back").GlobalTransform;
+		if (ActivePlatforms.Count > 0) 
+			return ActivePlatforms.First.Value.GetNode<Spatial>("Connectors/Back").GlobalTransform;
 		return Other.GlobalTransform;	
 	}
 

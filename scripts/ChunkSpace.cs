@@ -14,8 +14,8 @@ public class ChunkSpace : Spatial
 	public override void _Ready()
 	{
 		gc = GetNode<GameControl>("/root/GameControl");
-		
 		gb = GetNode<GameBus>("/root/GameBus");
+		gb.Connect("EnteredPortal", this, "on_EnteredPortal");
 		
 		this.speed = gc.speed;
 		Direction = new Vector2(0f, speed);
@@ -28,6 +28,14 @@ public class ChunkSpace : Spatial
 			
 		if (direction == "right")
 			Theta += Inc;
+	}
+	
+	private void on_EnteredPortal()
+	{
+		Theta = 0f;
+		Transform t = this.GlobalTransform;
+		t.origin = new Vector3(0, 0, 0);
+		this.GlobalTransform = t;
 	}
 	
 	public override void _PhysicsProcess(float delta)

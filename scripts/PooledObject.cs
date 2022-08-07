@@ -58,8 +58,8 @@ public class PooledObject<T> where T : Spatial
 		t.GlobalTransform = transform;
 		working.AddLast(t);
 
-		GD.Print("working: ", working.Count, " retired: ", 
-			retired.Count, " ", ScenePath);
+		/* GD.Print("working: ", working.Count, " retired: ", 
+			retired.Count, " ", ScenePath); */
 			
 		return t;
 	}
@@ -71,8 +71,8 @@ public class PooledObject<T> where T : Spatial
 		t.RotateY(rotation);
 		working.AddLast(t);
 
-		GD.Print("working: ", working.Count, " retired: ", 
-			retired.Count, " ", ScenePath);
+		/* GD.Print("working: ", working.Count, " retired: ", 
+			retired.Count, " ", ScenePath); */
 
 		return t;
 	}
@@ -85,8 +85,8 @@ public class PooledObject<T> where T : Spatial
 		t.Scale = scale;
 		working.AddLast(t);
 
-		GD.Print("working: ", working.Count, " retired: ", 
-			retired.Count, " ", ScenePath);
+		/* GD.Print("working: ", working.Count, " retired: ", 
+			retired.Count, " ", ScenePath); */
 
 		return t;
 	}
@@ -119,9 +119,13 @@ public class PooledObject<T> where T : Spatial
 		retired.Push(t);
 	}
 	
-	public void DismissAll()
+	public void Clear()
 	{
+		
 		while(working.Count > 0)
-			this.Dismiss();	
+			this.Dismiss();
+			
+		GD.Print("working: ", working.Count, " retired: ", 
+			retired.Count, " ", ScenePath);
 	}
 }

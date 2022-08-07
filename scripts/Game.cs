@@ -11,6 +11,9 @@ public class Game : Spatial
 	public override void _Ready()
 	{
 		gb = GetNode<GameBus>("/root/GameBus");
+		gb.Connect("EnteredPortal", this, "on_EnteredPortal");
+		gb.Connect("PlayerDied", this, "on_PlayerDied");
+		
 		gc = GetNode<GameControl>("/root/GameControl");
 	}
 	
@@ -30,9 +33,14 @@ public class Game : Spatial
 		}
 	}
 	
-	private void on_BodyEntered(object body)
+	private void on_PlayerDied()
 	{
 		GD.Print("died");
 		GetTree().ChangeScene("res://scenes/Menus/Home.tscn");
+	}
+	
+	private void on_EnteredPortal()
+	{
+		GD.Print("game portal");
 	}
 }

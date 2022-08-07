@@ -26,6 +26,7 @@ public class Player : KinematicBody
 	{
 		gc = GetNode<GameControl>("/root/GameControl");
 		gb = GetNode<GameBus>("/root/GameBus");
+		gb.Connect("EnteredPortal", this, "on_EnteredPortal");
 		
 		Death = GetNode<AudioStreamPlayer>("Death");
 		Jump = GetNode<AudioStreamPlayer>("Jump");
@@ -70,9 +71,12 @@ public class Player : KinematicBody
 			y_vel = -jump_power;	
 	}
 	
-	private void on_PlayerDied()
+	private void on_EnteredPortal()
 	{
-		// play death animation
+		theta = 0;
+		Transform t = this.GlobalTransform;
+		t.origin = new Vector3(0, 10, 0);
+		this.GlobalTransform = t;
 	}
 	
 	private void on_SummonEgg()
