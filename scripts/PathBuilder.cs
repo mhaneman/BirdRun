@@ -13,7 +13,7 @@ public class PathBuilder : Spatial
 	
 	private Vector3 end = new Vector3(0, 100, 0);
 	private float withinReachArea = 20f;
-	private float platformSpacing = 14f;
+	private float platformSpacing = 11f;
 
 	private float saltWeight = 0.8f;
 
@@ -90,6 +90,7 @@ public class PathBuilder : Spatial
 		{
 			endProcess = true;
 			pathSpawner.SummonPortal();
+			return;
 		}
 		
 		(int platformType, float rotation) newPlatform = platforms.Dequeue();

@@ -7,6 +7,6 @@ public class GameBus : Node
 	[Signal]public delegate void EnteredPortal();
 	
 	// move to game control
-	public int eggs = 3;
+	public int eggs = 20;
 	public int fruits = 0;
 }

@@ -1,15 +1,24 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/platforms/gap.obj" type="ArrayMesh" id=1]
 
 [sub_resource type="ConvexPolygonShape" id=1]
-points = PoolVector3Array( 2, 0, 0, -2, 0, 0, 2, 0, -8, -2, 0, -8, 2, -1, 0, -2, -1, 0, 2, -1, -8, -2, -1, -8 )
+points = PoolVector3Array( 2, 0, 0, -2, 0, 0, 2, 0, -5, -2, 0, -5, 2, -1, 0, -2, -1, 0, 2, -1, -5, -2, -1, -5 )
 
 [node name="Gap" type="StaticBody"]
 
+[node name="Gap" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = null
+
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
-disabled = true
+
+[node name="CollisionShape2" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9 )
+shape = SubResource( 1 )
 
 [node name="Connectors" type="Spatial" parent="."]
 
 [node name="Back" type="Spatial" parent="Connectors"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14 )

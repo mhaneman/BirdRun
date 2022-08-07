@@ -19,9 +19,10 @@ public class PathSpawner<T> : Node where T : Spatial
 		this.AddPlatformType("res://scenes/platforms/Flat.tscn", 50);
 		this.AddPlatformType("res://scenes/platforms/Stair.tscn", 50);
 		this.AddPlatformType("res://scenes/platforms/Down.tscn", 50);
+		this.AddPlatformType("res://scenes/platforms/Gap.tscn", 50);
+
 		
-		//this.AddPlatformType("res://scenes/platforms/Gap.tscn", 10);
-		//this.AddPlatformType("res://scenes/platforms/Upright.tscn", 10);
+		//this.AddPlatformType("res://scenes/platforms/Upright.tscn", 50);
 	}
 	
 	public void AddPlatformType(string ScenePath, int InitCount=1)
