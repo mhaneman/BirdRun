@@ -5,7 +5,7 @@ public class Player : KinematicBody
 {
 	
 	float gravity = 1.3f;
-	float jump_power = 35f;
+	float jump_power = 36f;
 	float max_terminal_velocity = 60f;
 	float egg_power = 10f;
 	

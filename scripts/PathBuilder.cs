@@ -11,9 +11,11 @@ public class PathBuilder : Spatial
 	private float[] directions = {-Mathf.Pi/2, 0f, Mathf.Pi/2};
 	private int numOfPlatforms;
 	
-	private Vector3 end = new Vector3(0, 100, 0);
+	private Vector3 end = new Vector3(0, 200, 0);
 	private float withinReachArea = 20f;
-	private float platformSpacing = 11f;
+	private float platformSpacing = 15f;
+	private float minHeight = -50f;
+	private float maxXZDistance = 300f;
 
 	private float saltWeight = 0.8f;
 
@@ -60,14 +62,7 @@ public class PathBuilder : Spatial
 	{
 		if (numProcess == 0)
 		{
-			pathSpawner.Summon(0, 0f);
-			pathSpawner.Summon(0, 0f);
-			pathSpawner.Summon(0, 0f);
-			pathSpawner.Summon(0, 0f);
-			pathSpawner.Summon(0, 0f);
-			pathSpawner.Summon(0, 0f);
-			pathSpawner.Summon(0, 0f);
-			pathSpawner.Summon(0, 0f);
+			pathSpawner.Summon(0, 0f, 8);
 		}
 	}
 
@@ -78,7 +73,7 @@ public class PathBuilder : Spatial
 		{
 			var plat = potentialPlatform.Value;
 			
-			if (!IsOverlapping(plat))
+			if (!IsOverlappingOrInBounds(plat))
 			{
 				setIsWithinReach(plat);
 				platforms.Enqueue(ratePlatform(plat), potentialPlatform.Key);
@@ -110,11 +105,14 @@ public class PathBuilder : Spatial
 			endProcess = true;
 	}
 	
-	private bool IsOverlapping(Vector3 position)
+	private bool IsOverlappingOrInBounds(Vector3 position)
 	{
 		foreach (StaticBody s in pathSpawner.ActivePlatforms)
 		{
-			if (position.DistanceTo(s.GlobalTransform.origin) <= platformSpacing)
+			if (position.DistanceTo(s.GlobalTransform.origin) <= platformSpacing &&
+				position.y >= minHeight && 
+				position.x >= -maxXZDistance && position.x <= maxXZDistance &&
+				position.z >= -maxXZDistance && position.z <= maxXZDistance)
 				return true;
 		}
 		return false;

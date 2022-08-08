@@ -16,10 +16,12 @@ public class PathSpawner<T> : Node where T : Spatial
 		this.Other = Other;
 		Portal = new PooledObject<T>(Other, "res://scenes/platforms/Portal.tscn", 5);
 		Connector = new PooledObject<T>(Other, "res://scenes/platforms/Connector.tscn", 50);
+
 		this.AddPlatformType("res://scenes/platforms/Flat.tscn", 50);
 		this.AddPlatformType("res://scenes/platforms/Stair.tscn", 50);
 		this.AddPlatformType("res://scenes/platforms/Down.tscn", 50);
 		this.AddPlatformType("res://scenes/platforms/Gap.tscn", 50);
+		this.AddPlatformType("res://scenes/platforms/Upright.tscn", 50);
 
 		
 		//this.AddPlatformType("res://scenes/platforms/Upright.tscn", 50);
@@ -43,6 +45,12 @@ public class PathSpawner<T> : Node where T : Spatial
 	{
 		Transform spawnLoc = getNextEndPoint(rotation);
 		ActivePlatforms.AddFirst(PlatformTypes[platformType].Summon(spawnLoc, rotation));
+	}
+
+	public void Summon(int platformType, float rotation, int count)
+	{
+		for(int i=0; i<count; i++)
+			Summon(platformType, rotation);
 	}
 
 	public void Summon(int platformType, float rotation, Vector3 scale)
