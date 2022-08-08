@@ -20,7 +20,7 @@ sun_energy = 30.0
 background_mode = 2
 background_sky = SubResource( 1 )
 ambient_light_color = Color( 0.5, 0.5, 0.5, 1 )
-ambient_light_sky_contribution = 0.4
+ambient_light_sky_contribution = 0.3
 
 [node name="Game" type="Spatial"]
 script = ExtResource( 6 )
@@ -39,6 +39,7 @@ environment = SubResource( 2 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment"]
 transform = Transform( -1, 6.18172e-08, 6.18172e-08, 0, -0.707107, 0.707107, 8.74228e-08, 0.707107, 0.707107, 0, 200, 0 )
+light_energy = 0.95
 
 [connection signal="PlayerInput" from="." to="PlatformSpace" method="on_PlayerInput"]
 [connection signal="PlayerInput" from="." to="Player" method="on_PlayerInput"]
