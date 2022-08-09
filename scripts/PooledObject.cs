@@ -1,12 +1,13 @@
 using Godot;
 using System;
+using System.Threading;
 
 using System.Collections.Generic;
 
 public class PooledObject<T> where T : Spatial
 {
 	private Transform discardLoc = new Transform();
-	private LinkedList<T> working = new LinkedList<T>();
+	private LinkedList<T> working = new LinkedList<T>(); // eventually make double linked list
 	private Stack<T> retired = new Stack<T>();
 	
 	private Spatial Other;
@@ -24,31 +25,43 @@ public class PooledObject<T> where T : Spatial
 		this.discardLoc.origin = new Vector3(0, -20, 0);
 		this.Other = Other;
 		this.ScenePath = ScenePath;
-		
-		for(int i=0; i<InitCount; i++)
-		{
-			T t = Instance();
-			t.GlobalTransform = discardLoc;
-			t.Visible = false;
-			retired.Push(t);	
-		}
+
+		DefferedInstance(InitCount); 
 	}
 	
-	private T Instance() 
+	private void DefferedInstance(int count=1) 
 	{
-		PackedScene scene = (PackedScene)ResourceLoader.Load(ScenePath);
-		T t = scene.Instance<T>();
-		Other.CallDeferred("add_child", t);
-		return t;
+		for (int i=0; i<count; i++)
+		{
+			PackedScene scene = (PackedScene)ResourceLoader.Load(ScenePath);
+			T t = scene.Instance<T>();
+			Other.CallDeferred("add_child", t);
+			t.GlobalTransform = discardLoc;
+			t.Visible = false;
+			retired.Push(t);
+		}
+	}
+
+	private void RunningInstance(int count=1)
+	{
+		for (int i=0; i<count; i++)
+		{
+			PackedScene scene = (PackedScene)ResourceLoader.Load(ScenePath);
+			T t = scene.Instance<T>();
+			Other.AddChild(t);
+			t.GlobalTransform = discardLoc;
+			t.Visible = false;
+			retired.Push(t);
+		}
+
 	}
 	
 	private T MakeActive() 
 	{
 		T t;
-		if (retired.Count == 0)
-			t = Instance();
-		else
-			t = retired.Pop();
+		if (retired.Count <= working.Count)
+			RunningInstance(working.Count / 2);
+		t = retired.Pop();
 		t.Visible = true;
 		return t;
 	}

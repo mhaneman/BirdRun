@@ -45,6 +45,8 @@ public class Player : KinematicBody
 	{
 		Vector3 rot = this.Rotation;
 		rot.y = Mathf.LerpAngle(rot.y, theta, gc.speed * (1f / gc.lerp_weight));
+		rot.x = 0f;
+		rot.z = 0f;
 		this.Rotation = rot;
 	}
 	
@@ -75,7 +77,7 @@ public class Player : KinematicBody
 	{
 		theta = 0;
 		Transform t = this.GlobalTransform;
-		t.origin = new Vector3(0, 10, 0);
+		t.origin = new Vector3(0, 6, -6);
 		this.GlobalTransform = t;
 	}
 	

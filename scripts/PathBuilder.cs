@@ -11,12 +11,13 @@ public class PathBuilder : Spatial
 	private float[] directions = {-Mathf.Pi/2, 0f, Mathf.Pi/2};
 	private int numOfPlatforms;
 	
-	private Vector3 end = new Vector3(0, 200, 0);
 	private float withinReachArea = 20f;
 	private float platformSpacing = 15f;
 	private float minHeight = -50f;
 	private float maxXZDistance = 300f;
 
+	private Vector3 end = new Vector3(0, 200, 0);
+	//private Vector3 scalePlatformWidth = new Vector3(2f, 1f, 1f);
 	private float saltWeight = 0.8f;
 
 	private int numProcess = 0;
@@ -62,6 +63,7 @@ public class PathBuilder : Spatial
 	{
 		if (numProcess == 0)
 		{
+			pathSpawner.SummonPortal();
 			pathSpawner.Summon(0, 0f, 8);
 		}
 	}
