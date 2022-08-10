@@ -7,7 +7,7 @@
 points = PoolVector3Array( 2, -1, 0, -2, -1, 0, 2, -1, -1, -2, -1, -1, 2, 7, 0, -2, 7, 0, 2, 7, -1, -2, 7, -1 )
 
 [sub_resource type="ConvexPolygonShape" id=2]
-points = PoolVector3Array( 2, 0, 0, 2, -1, 0, -2, -1, 0, -2, 0, 0, 2, -1, -30, 2, 0, -30, -2, 0, -30, -2, -1, -30 )
+points = PoolVector3Array( 2, 0, 0, 2, -1, 0, -2, -1, 0, -2, 0, 0, 2, -1, -10, 2, 0, -10, -2, 0, -10, -2, -1, -10 )
 
 [sub_resource type="ConvexPolygonShape" id=3]
 points = PoolVector3Array( 2, 0, 0, -2, 0, 0, 2, 1, 0, -2, 1, 0, 2, 0, -5, -2, 0, -5, 2, 1, -5, -2, 1, -5 )
@@ -21,17 +21,17 @@ mesh = ExtResource( 1 )
 material/0 = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="."]
 shape = SubResource( 2 )
 
 [node name="CollisionShape4" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -31 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -11 )
 shape = SubResource( 3 )
 
 [node name="Connectors" type="Spatial" parent="."]
 
 [node name="Back" type="Spatial" parent="Connectors"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -36 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -16 )

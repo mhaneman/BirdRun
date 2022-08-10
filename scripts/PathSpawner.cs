@@ -21,10 +21,7 @@ public class PathSpawner<T> : Node where T : Spatial
 		this.AddPlatformType("res://scenes/platforms/Stair.tscn", 10);
 		this.AddPlatformType("res://scenes/platforms/Down.tscn", 10);
 		this.AddPlatformType("res://scenes/platforms/Gap.tscn", 10);
-		this.AddPlatformType("res://scenes/platforms/Upright.tscn", 10);
-
-		
-		//this.AddPlatformType("res://scenes/platforms/Upright.tscn", 50);
+		//this.AddPlatformType("res://scenes/platforms/Upright.tscn", 10);
 	}
 	
 	public void AddPlatformType(string ScenePath, int InitCount=1)
@@ -100,18 +97,17 @@ public class PathSpawner<T> : Node where T : Spatial
 
 		for (int platformNum=0; platformNum<PlatformTypes.Count; platformNum++)
 		{
-			Spatial n = Connector.PeekFromRetired(currentPoint).GetNode<Spatial>("Connectors");
-			foreach(Spatial s in n.GetChildren())
+			var connectors = Connector.getConnectors("Connectors", currentPoint);
+			foreach((string name, Transform pos) s in connectors)
 			{
 				float rotation = 0f;
-				if (s.Name == "Left")
+				if (s.name == "Left")
 					rotation = -Mathf.Pi/2;
 
-				if (s.Name == "Right")
+				if (s.name == "Right")
 					rotation = Mathf.Pi/2;
-				
-				T connectorPoints = PlatformTypes[platformNum].PeekFromRetired(s.GlobalTransform, rotation);
-				Vector3 end = connectorPoints.GetNode<Spatial>("Connectors/Back").GlobalTransform.origin;
+
+				Vector3 end = PlatformTypes[platformNum].getConnector("Connectors/Back", s.pos, rotation);
 				points.Add((platformNum, rotation), end);
 			}
 		}

@@ -95,19 +95,33 @@ public class PooledObject<T> where T : Spatial
 		return t;
 	}
 
-	public T PeekFromRetired(Transform transform)
+	// borrow a retired platform to get global transforms of all connectors
+	public List<(string, Transform)> getConnectors(string childName, Transform transform, float rotation = 0f)
 	{
+		var children = new List<(string, Transform)>();
 		T t = retired.Peek();
 		t.GlobalTransform = transform;
-		return t;
+		t.RotateY(rotation);
+
+		Spatial connector = t.GetNode<Spatial>(childName);
+		foreach(Spatial n in connector.GetChildren())
+			children.Add((n.Name, n.GlobalTransform));
+
+		t.GlobalTransform = discardLoc;
+		return children;
 	}
 
-	public T PeekFromRetired(Transform transform, float rotation)
+	// borrow a retired platform to get global transform of a specific connector
+	public Vector3 getConnector(string childName, Transform transform, float rotation = 0f)
 	{
 		T t = retired.Peek();
 		t.GlobalTransform = transform;
 		t.RotateY(rotation);
-		return t;
+
+		Vector3 connector = t.GetNode<Spatial>(childName).GlobalTransform.origin;
+
+		t.GlobalTransform = discardLoc;
+		return connector;
 	}
 	
 	public void Dismiss() 

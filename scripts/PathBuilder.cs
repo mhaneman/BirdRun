@@ -17,7 +17,8 @@ public class PathBuilder : Spatial
 	private float maxXZDistance = 300f;
 
 	private Vector3 end = new Vector3(0, 200, 0);
-	//private Vector3 scalePlatformWidth = new Vector3(2f, 1f, 1f);
+	private float maxNumProcess = 10;
+	private Vector3 scalePlatformWidth = new Vector3(2f, 1f, 1f);
 	private float saltWeight = 0.8f;
 
 	private int numProcess = 0;
@@ -48,13 +49,17 @@ public class PathBuilder : Spatial
 			return;
 
 		initalPlatforms(pathSpawner);
-		
-		addPlatform();
+		addDirectionalPlatform();
+		checkProcesses();
+	}
 
-		if (endProcess || numProcess >= 30)
+	private void checkProcesses()
+	{
+		if (endProcess || numProcess >= maxNumProcess)
 		{
 			pathSpawner.SummonPortal();
 			runProcess = false;
+			numProcess += 10;
 		} 
 		numProcess++;
 	}
@@ -68,7 +73,7 @@ public class PathBuilder : Spatial
 		}
 	}
 
-	private void addPlatform()
+	private void addDirectionalPlatform()
 	{
 		var platforms = new PriorityQueue<(int, float)>(true);
 		foreach(var potentialPlatform in pathSpawner.getAllPlatformConnectingGlobalPoints())
@@ -86,7 +91,6 @@ public class PathBuilder : Spatial
 		if (platforms.Count == 0)
 		{
 			endProcess = true;
-			pathSpawner.SummonPortal();
 			return;
 		}
 		
