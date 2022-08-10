@@ -19,15 +19,15 @@ public class Game : Spatial
 	
 	private void on_Swiped(string direction)
 	{
-		if (direction != "jump" || gc.IsOnFloor)
+		if (direction != "jump" || gb.IsOnFloor)
 		{
 			EmitSignal("PlayerInput", direction);
 			return;
 		}
 		
-		if (gb.eggs > 0)
+		if (gc.eggs > 0)
 		{
-			gb.eggs--;
+			gc.eggs--;
 			EmitSignal("PlayerInput", direction);
 			EmitSignal("SummonEgg");
 		}

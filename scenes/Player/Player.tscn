@@ -4,10 +4,11 @@
 [ext_resource path="res://assets/audio/soundfx/gumgum/gumgum_switch.wav" type="AudioStream" id=2]
 [ext_resource path="res://assets/audio/soundfx/gumgum/gumgum_jump.wav" type="AudioStream" id=3]
 [ext_resource path="res://assets/audio/soundfx/gumgum/gumgum_death.wav" type="AudioStream" id=4]
+[ext_resource path="res://scenes/Characters/Players/LiminalChicken.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape" id=1]
-
-[sub_resource type="CapsuleMesh" id=2]
+radius = 1.0969
+height = 2.52335
 
 [node name="Player" type="KinematicBody"]
 axis_lock_motion_x = true
@@ -21,14 +22,6 @@ transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0
 near = 1.0
 far = 200.0
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 1 )
-
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-mesh = SubResource( 2 )
-
 [node name="EggSpawnPoint" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1 )
 
@@ -40,3 +33,9 @@ stream = ExtResource( 3 )
 
 [node name="Switch" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="liminal_chicken" parent="." instance=ExtResource( 5 )]

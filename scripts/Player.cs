@@ -99,12 +99,12 @@ public class Player : KinematicBody
 	{
 		if (IsOnFloor())
 		{
-			gc.IsOnFloor = true;
+			gb.IsOnFloor = true;
 			velocity.y = 0f;	
 		}
 		else
 		{
-			gc.IsOnFloor = false;
+			gb.IsOnFloor = false;
 			y_vel = Mathf.Clamp(y_vel-gravity, -max_terminal_velocity, jump_power);
 		}
 			

@@ -1,12 +1,12 @@
 using Godot;
-using System;
 
+
+// this class is used for public signals;
 public class GameBus : Node
 {
 	[Signal]public delegate void PlayerDied();
 	[Signal]public delegate void EnteredPortal();
-	
-	// move to game control
-	public int eggs = 20;
-	public int fruits = 0;
+	[Signal]public delegate void OnFloor();
+
+	public bool IsOnFloor = false;
 }
