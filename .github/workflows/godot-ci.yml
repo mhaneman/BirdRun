@@ -1,7 +1,7 @@
 name: 'Publish to GitHub Pages'
 
 env:
-  GODOT_VERSION: 3.4.4 # Remember to manually set image to this version below.
+  GODOT_VERSION: 3.5.1 # Remember to manually set image to this version below.
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-18.04
 
     container:
-      image: barichello/godot-ci:mono-3.4.4
+      image: barichello/godot-ci:mono-3.5.1
 
     steps:
       - name: Checkout
@@ -27,7 +27,7 @@ jobs:
         run: mkdir -v -p build/web
 
       - name: Build
-        run: godot -v --export "HTML5" ../build/web/index.html project/project.godot
+        run: godot -v --export "HTML5" build/web/index.html project/project.godot
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
