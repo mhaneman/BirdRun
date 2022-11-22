@@ -1,19 +1,25 @@
+# Workflow to publish Godot HTML5 games to GitHub Pages
+#
+# Make sure your project is configured for Web export
+# to the path `build/web`.
+
 name: 'Publish to GitHub Pages'
 
 env:
-  GODOT_VERSION: 3.4.2 # Remember to manually set image to this version below.
+  GODOT_VERSION: 3.2.2 # Remember to manually set image to this version below.
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-18.04
 
     container:
-      image: barichello/godot-ci:mono-3.4.2
+      image: barichello/godot-ci:3.2.2
 
     steps:
       - name: Checkout
@@ -27,7 +33,7 @@ jobs:
         run: mkdir -v -p build/web
 
       - name: Build
-        run: godot -v --export "HTML5" build/web/index.html project/project.godot
+        run: godot -v --export "HTML5" build/web/index.html
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
